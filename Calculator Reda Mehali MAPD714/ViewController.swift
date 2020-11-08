@@ -21,8 +21,15 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var result: UILabel!
     
+    /**
+     triggers when any number-button in the calculator is clicked
+     */
     @IBAction func numbers(_ sender: Any)
     {
+        if (sender as AnyObject).tag == 21 {
+            result.text = String(Double.pi)
+        }
+        
         if (resetResult) {
             result.text = ""
             resetResult = false
@@ -47,9 +54,13 @@ class ViewController: UIViewController {
         }
     }
     
+    /**
+     triggers when any button other than numbers are clicked
+     */
     @IBAction func buttons(_ sender: UIButton)
     {
-        if result.text != "" && sender.tag != 11 && sender.tag != 16 && sender.tag != 18 {
+        if result.text != "" && sender.tag != 11 && sender.tag != 16 && sender.tag != 18 && sender.tag != 19 && sender.tag != 20 &&
+            sender.tag != 22 && sender.tag != 23 {
             previousNumber = Double(result.text!)!
             operation = sender.tag
             performingMath = true;
@@ -83,9 +94,28 @@ class ViewController: UIViewController {
             doubleVal = -doubleVal
             result.text = String(doubleVal)
             convertDoubleToInteger()
+        } else if sender.tag == 19 {
+            let squareRoot = Double(result.text!)!.squareRoot()
+            result.text = String(squareRoot)
+            convertDoubleToInteger()
+        } else if sender.tag == 20 {
+            let powerTwo = pow(Double(result.text!)!, 2)
+            result.text = String(powerTwo)
+            convertDoubleToInteger()
+        } else if sender.tag == 22 {
+            let sinOfVal = sin(Double(result.text!)!)
+            result.text = String(sinOfVal)
+            convertDoubleToInteger()
+        } else if sender.tag == 23 {
+            let cosOfVal = cos(Double(result.text!)!)
+            result.text = String(cosOfVal)
+            convertDoubleToInteger()
         }
     }
     
+    /**
+     converts any given double into integer
+     */
     func convertDoubleToInteger()
     {
         let valueInDouble = Double(result.text!)!
